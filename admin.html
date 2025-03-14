@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #navbar {
+            width: 100%;
+            background-color: #333;
+            padding: 10px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        #navbar button {
+            background-color: #0077b5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #navbar button:hover {
+            background-color: #005f8a;
+        }
+
+        #content {
+            width: 90%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+
+        #profile,
+        #jobFormContainer,
+        #jobListingsContainer {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none; /* Hide all sections initially */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .profile-detail {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .profile-detail label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: #333;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: #0077b5;
+        }
+
+        .comments {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .comments label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .comments p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .form-group {
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            background-color: #0077b5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #005f8a;
+        }
+
+        .job-listing {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .job-detail {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .job-detail label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .profile-detail {
+                font-size: 14px;
+            }
+
+            .social-links a {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            #profile,
+            #jobFormContainer,
+            #jobListingsContainer {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            .profile-detail {
+                font-size: 12px;
+            }
+
+            .social-links a {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar">
+        <button onclick="showProfile()">Profile</button>
+        <button onclick="showJobListings()">Job Listings</button>
+        <button onclick="showJobForm()">Add New Job Requirement</button>
+    </div>
+
+    <div id="content">
+        <div id="profile">
+            <h1>Company Profile</h1>
+
+            <div class="profile-detail">
+                <label>Company Name:</label> <span id="companyName"></span>
+            </div>
+            <div class="profile-detail">
+                <label>Company Location:</label> <span id="companyLocation"></span>
+            </div>
+            <div class="profile-detail">
+                <label>Contact Person:</label> <span id="contactPerson"></span>
+            </div>
+            <div class="profile-detail">
+                <label>Email:</label> <span id="email"></span>
+            </div>
+            <div class="profile-detail">
+                <label>Phone Number:</label> <span id="phoneNumber"></span>
+            </div>
+            <div class="profile-detail">
+                <label>Company Type:</label> <span id="companyType"></span>
+            </div>
+            <div class="profile-detail">
+                <label>Company Description:</label> <span id="companyDescription"></span>
+            </div>
+
+            <div class="social-links">
+                <a id="facebookLink" target="_blank">Facebook</a>
+                <a id="instagramLink" target="_blank">Instagram</a>
+                <a id="twitterLink" target="_blank">Twitter</a>
+                <a id="linkedinLink" target="_blank">LinkedIn</a>
+                <a id="githubLink" target="_blank">GitHub</a>
+            </div>
+
+            <div class="comments">
+                <label>Comments:</label>
+                <p id="comments"></p>
+            </div>
+        </div>
+
+        <div id="jobListingsContainer">
+            <h1>Job Listings</h1>
+            <div id="jobListings"></div>
+        </div>
+
+        <div id="jobFormContainer">
+            <h1>Job Input Form</h1>
+            <form id="jobInputForm">
+                <div class="form-group">
+                    <label for="jobTitle">Job Title:</label>
+                    <input type="text" id="jobTitle" name="jobTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="jobLanguages">Programming Languages:</label>
+                    <input type="text" id="jobLanguages" name="jobLanguages" required>
+                </div>
+                <div class="form-group">
+                    <label for="jobRequirements">Job Requirements:</label>
+                    <textarea id="jobRequirements" name="jobRequirements" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="userExperience">Required Experience:</label>
+                    <input type="text" id="userExperience" name="userExperience" required>
+                </div>
+                <div class="form-group">
+                    <label for="officeLocation">Office Location:</label>
+                    <input type="text" id="officeLocation" name="officeLocation" required>
+                </div>
+                <button type="submit">Generate Job Listings</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Function to show the profile section
+        function showProfile() {
+            const profileSection = document.getElementById("profile");
+            const jobFormContainer = document.getElementById("jobFormContainer");
+            const jobListingsContainer = document.getElementById("jobListingsContainer");
+            profileSection.style.display = "block";
+            jobFormContainer.style.display = "none";
+            jobListingsContainer.style.display = "none";
+
+            // Populate profile with data
+            document.getElementById("companyName").textContent = urlParams.get("name");
+            document.getElementById("companyLocation").textContent = urlParams.get("location");
+            document.getElementById("contactPerson").textContent = urlParams.get("contactPerson");
+            document.getElementById("email").textContent = urlParams.get("email");
+            document.getElementById("phoneNumber").textContent = urlParams.get("phoneNumber");
+            document.getElementById("companyType").textContent = urlParams.get("companyType");
+            document.getElementById("companyDescription").textContent = urlParams.get("description");
+            document.getElementById("comments").textContent = urlParams.get("comments");
+
+            // Update social links
+            document.getElementById("facebookLink").href = urlParams.get("facebook");
+            document.getElementById("instagramLink").href = urlParams.get("instagram");
+            document.getElementById("twitterLink").href = urlParams.get("twitter");
+            document.getElementById("linkedinLink").href = urlParams.get("linkedin");
+            document.getElementById("githubLink").href = urlParams.get("github");
+        }
+
+        // Function to show the job listings section
+        function showJobListings(){ 
+            const profileSection = document.getElementById("profile");
+            const jobFormContainer = document.getElementById("jobFormContainer");
+            const jobListingsContainer = document.getElementById("jobListingsContainer");
+            profileSection.style.display = "none";
+            jobFormContainer.style.display = "none";
+            jobListingsContainer.style.display = "block";
+
+            // Retrieve job listings from localStorage
+            const jobListings = JSON.parse(localStorage.getItem("jobListings")) || [];
+            const jobListingsContainerDiv = document.getElementById("jobListings");
+            jobListingsContainerDiv.innerHTML = ""; // Clear previous content
+
+            jobListings.forEach((job, index) => {
+                const jobListing = document.createElement("div");
+                jobListing.className = "job-listing";
+
+                jobListing.innerHTML = `
+                    <div class="job-detail">
+                        <label>Job Title:</label> <span>${job.title}</span>
+                    </div>
+                    <div class="job-detail">
+                        <label>Programming Languages:</label> <span>${job.languages}</span>
+                    </div>
+                    <div class="job-detail">
+                        <label>Job Requirements:</label> <span>${job.requirements}</span>
+                    </div>
+                    <div class="job-detail">
+                        <label>Required Experience:</label> <span>${job.experience}</span>
+                    </div>
+                    <div class="job-detail">
+                        <label>Office Location:</label> <span>${job.location}</span>
+                    </div>
+                `;
+
+                jobListingsContainerDiv.appendChild(jobListing);
+            });
+        }
+
+        // Function to show the job input form
+        function showJobForm() {
+            const profileSection = document.getElementById("profile");
+            const jobFormContainer = document.getElementById("jobFormContainer");
+            const jobListingsContainer = document.getElementById("jobListingsContainer");
+            profileSection.style.display = "none";
+            jobFormContainer.style.display = "block";
+            jobListingsContainer.style.display = "none";
+        }
+
+        // Handle job form submission
+        document.getElementById("jobInputForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const jobDetails = {
+                title: document.getElementById("jobTitle").value,
+                languages: document.getElementById("jobLanguages").value,
+                requirements: document.getElementById("jobRequirements").value,
+                experience: document.getElementById("userExperience").value,
+                location: document.getElementById("officeLocation").value
+            };
+
+            // Generate 10 job listings
+            const jobListings = [];
+            for (let i = 0; i < 10; i++) {
+                jobListings.push(jobDetails);
+            }
+
+            // Store job listings in localStorage
+            localStorage.setItem("jobListings", JSON.stringify(jobListings));
+
+            // Redirect to the first page
+            window.location.href = "firstPage.html";
+        });
+
+        // Show profile by default when the page loads
+        showJobListings();
+    </script>
+</body>
+
+</html>

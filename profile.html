@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #navbar {
+            width: 100%;
+            background-color: #333;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        #navbar button {
+            background-color: #0077b5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #navbar button:hover {
+            background-color: #005f8a;
+        }
+
+        #profile {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            margin-top: 20px;
+            display: none; /* Hide profile section initially */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .profile-detail {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .profile-detail label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: #333;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: #0077b5;
+        }
+
+        .comments {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .comments label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .comments p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .profile-detail {
+                font-size: 14px;
+            }
+
+            .social-links a {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            #profile {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            .profile-detail {
+                font-size: 12px;
+            }
+
+            .social-links a {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar">
+        <button onclick="showProfile()">Profile</button>
+    </div>
+
+    <div id="profile">
+        <h1>Company Profile</h1>
+
+        <div class="profile-detail">
+            <label>Company Name:</label> <span id="companyName"></span>
+        </div>
+        <div class="profile-detail">
+            <label>Company Location:</label> <span id="companyLocation"></span>
+        </div>
+        <div class="profile-detail">
+            <label>Contact Person:</label> <span id="contactPerson"></span>
+        </div>
+        <div class="profile-detail">
+            <label>Email:</label> <span id="email"></span>
+        </div>
+        <div class="profile-detail">
+            <label>Phone Number:</label> <span id="phoneNumber"></span>
+        </div>
+        <div class="profile-detail">
+            <label>Company Type:</label> <span id="companyType"></span>
+        </div>
+        <div class="profile-detail">
+            <label>Company Description:</label> <span id="companyDescription"></span>
+        </div>
+
+        <div class="social-links">
+            <a id="facebookLink" target="_blank">Facebook</a>
+            <a id="instagramLink" target="_blank">Instagram</a>
+            <a id="twitterLink" target="_blank">Twitter</a>
+            <a id="linkedinLink" target="_blank">LinkedIn</a>
+            <a id="githubLink" target="_blank">GitHub</a>
+        </div>
+
+        <div class="comments">
+            <label>Comments:</label>
+            <p id="comments"></p>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Function to show the profile section
+        function showProfile() {
+            const profileSection = document.getElementById("profile");
+            profileSection.style.display = "block";
+
+            // Populate profile with data
+            document.getElementById("companyName").textContent = urlParams.get("name");
+            document.getElementById("companyLocation").textContent = urlParams.get("location");
+            document.getElementById("contactPerson").textContent = urlParams.get("contactPerson");
+            document.getElementById("email").textContent = urlParams.get("email");
+            document.getElementById("phoneNumber").textContent = urlParams.get("phoneNumber");
+            document.getElementById("companyType").textContent = urlParams.get("companyType");
+            document.getElementById("companyDescription").textContent = urlParams.get("description");
+            document.getElementById("comments").textContent = urlParams.get("comments");
+
+            // Update social links
+            document.getElementById("facebookLink").href = urlParams.get("facebook");
+            document.getElementById("instagramLink").href = urlParams.get("instagram");
+            document.getElementById("twitterLink").href = urlParams.get("twitter");
+            document.getElementById("linkedinLink").href = urlParams.get("linkedin");
+            document.getElementById("githubLink").href = urlParams.get("github");
+        }
+    </script>
+</body>
+
+</html>

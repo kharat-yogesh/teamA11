@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        
+             html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: transparent;
+            border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: transparent;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .language select {
+            padding: 5px;
+        }
+
+        .auth button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .auth button:hover {
+            background-color: #0056b3;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+            background-image: url(https://media.istockphoto.com/id/1443245439/photo/business-meeting-businesswoman-woman-office-portrait-job-career-happy-businessman-teamwork.jpg?s=612x612&w=0&k=20&c=1ZR02c1UKfGdBCNWzzKlrwrVZuEiOqnAKcKF4V_t038=);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #7f7b7b;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 20px;
+        }
+
+        .stats div {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            flex: 0 0 auto;
+            width: 200px;
+            margin-top: 200px;
+        }
+
+        .stats h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .stats p {
+            font-size: 20px;
+            color: #007bff;
+        }
+
+        #profile {
+            display: none;
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 200px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        #profile h1 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .profile-detail {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .profile-detail label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .social-links {
+            display:inline-block;
+            flex-direction: column;
+            margin: 10px 0;
+        }
+
+        .social-links a {
+            color: #333;
+            font-size: 24px;
+            text-decoration: none;
+            margin: 10px 0;
+            margin-right: 10px;
+        }
+
+        .social-links a:hover {
+            color: #0077b5;
+        }
+
+        .nav-icon {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .profile-icon {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-icon, .profile-icon {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: rgba(248, 249, 250, 0.9);
+                border-bottom: 1px solid #ddd;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .language, .auth {
+                margin-top: 10px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .stats {
+                flex-wrap: nowrap;
+            }
+
+            .stats div {
+                flex: 0 0 auto;
+                width: 200px;
+            }
+
+            #profile {
+                width: 100%;
+                height: auto;
+                top: 60px;
+                right: 0;
+                border-radius: 0;
+            }
+        }
+   /* Search Container Styles */
+.search-container {
+    margin-top: 20vh; /* Adjust as needed */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    backdrop-filter: blur(10px); /* Blur effect for a modern look */
+}
+
+.search-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    align-items: center;
+}
+
+.form-group {
+    position: relative;
+    height: 50px;
+}
+
+.form-group1{
+    position: relative;
+    height: 50px;
+    border-radius: 10px;
+    color: #ddd;
+}
+input, select {
+    width: 100%;
+    height: 100%;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+input:focus, select:focus, button:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle glow effect */
+}
+
+button {
+    background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient background */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #0056b3, #004080); /* Darker gradient on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+}
+
+/* Responsive Design for Search Container */
+@media (max-width: 768px) {
+    .search-container {
+        margin-top: 10vh; /* Adjust for smaller screens */
+        padding: 15px;
+    }
+
+    .search-section {
+        grid-template-columns: 1fr; /* Stack elements vertically on small screens */
+    }
+
+    .form-group {
+        height: 45px; /* Slightly smaller height for mobile */
+    }
+
+    input, select {
+        font-size: 0.9rem; /* Smaller font size for mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .search-container {
+        margin-top: 5vh; /* Adjust for very small screens */
+        padding: 10px;
+    }
+
+    .form-group {
+        height: 40px; /* Even smaller height for very small screens */
+    }
+
+    input, select{
+        font-size: 0.8rem; /* Smaller font size for very small screens */
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="main">
+        <header>
+            <div class="nav-icon" id="navIcon">
+                <i class="fas fa-bars"></i>
+                <div class="logo">JOBES</div>
+            </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Find Jobs</a></li>
+                    <li><a href="#">Pages</a></li>
+                    <li><a href="#">Employers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="contactpage.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="auth">
+                <button><a href="login.html">Log in</a></button>
+                <button>Post Job</button>
+                <button id="profileButton"><i class="fas fa-user"></i> Profile</button>
+            </div>
+            <div class="profile-icon" id="profileIcon">
+                <i class="fas fa-user"></i>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h1>Your Career's Opportunity</h1>
+            <p>2400 Peoples are daily search in this portal, 100 user added job portal!</p>
+           
+            <div class="search-container">
+                <div class="search-section">
+                    <div class="form-group">
+                        <!-- <input type="text" placeholder="Job Title" id="jobTitle"> -->
+                        <div class="form-group">
+                            <select id="category">
+                                <option value="">job <title></title></option>
+                                <option value="it">IT & Software</option>
+                                <option value="marketing">java full stack </option>
+                                <option value="finance">python full stack</option>
+                            </select>
+                        </div> 
+                    </div>
+                    <div class="form-group">
+                        <select id="category">
+                            <option value="">Select Category</option>
+                            <option value="it">IT & Software</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="finance">Finance</option>
+                        </select>
+                    </div> 
+                    <div class="form-group">
+                        <button type="button" class="form-group1">Search Jobs</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <div id="profile">
+            <h1>User Profile</h1>
+            <div class="profile-detail">
+                <label>Username:</label> <span id="profileUsername"></span>
+            </div>
+            <div class="profile-detail">
+                <label>Email:</label> <span id="profileEmail"></span>
+            </div>
+            <div class="profile-detail">
+                <label>Location:</label> <span id="profileLocation"></span>
+            </div>
+            <div class="profile-detail">
+                <label>College:</label> <span id="profileCollege"></span>
+            </div>
+            <div class="profile-detail">
+                <label>Skills:</label> <span id="profileSkills"></span>
+            </div>
+            <div class="social-links" id="profileSocialLinks"></div>
+        </div>
+    </div>
+ 
+    <script src="script.js"></script>
+    
+    <script>
+        // Populate profile section with user data
+        function populateProfile() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (user) {
+                document.getElementById('profileUsername').textContent = user.username;
+                document.getElementById('profileEmail').textContent = user.email;
+                document.getElementById('profileLocation').textContent = user.location;
+                document.getElementById('profileCollege').textContent = user.college;
+                document.getElementById('profileSkills').textContent = user.skills.join(', ');
+
+                const socialLinks = document.getElementById('profileSocialLinks');
+                socialLinks.innerHTML = `
+                    <a href="${user.socialLinks.facebook}" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="${user.socialLinks.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="${user.socialLinks.twitter}" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="${user.socialLinks.github}" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="${user.socialLinks.linkedin}" target="_blank"><i class="fab fa-linkedin"></i></a>
+                `;
+            }
+        }
+
+        // Toggle profile section visibility
+        const profileButton = document.getElementById('profileButton');
+        const profileIcon = document.getElementById('profileIcon');
+        const profileSection = document.getElementById('profile');
+
+        profileButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            populateProfile();
+            profileSection.style.display = profileSection.style.display === 'block' ? 'none' : 'block';
+        });
+
+        profileIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            populateProfile();
+            profileSection.style.display = profileSection.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Close profile section when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!profileSection.contains(e.target) && !profileButton.contains(e.target) && !profileIcon.contains(e.target)) {
+                profileSection.style.display = 'none';
+            }
+        });
+
+        // Animate numbers in stats section
+        function animateNumbers() {
+            const countElements = document.querySelectorAll('.count');
+            const speed = 1000; // Adjust speed here (higher value = slower animation)
+
+            countElements.forEach((element) => {
+                const target = parseInt(element.getAttribute('data-target'));
+                const increment = target / speed;
+                let current = 0;
+
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        element.textContent = Math.ceil(current);
+                        setTimeout(updateNumber, 10);
+                    } else {
+                        element.textContent = target;
+                    }
+                };
+
+                updateNumber();
+            });
+        }
+
+        // Run animation when the page loads
+        window.onload = animateNumbers;
+    </script>
+</body>
+</html>
